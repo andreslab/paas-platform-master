@@ -4,7 +4,10 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: Text("Home"),
+      child: RaisedButton(
+        child: Text("Compañias"),
+        onPressed: () => Navigator.pushNamed(context, "company"),
+      ),
     );
   }
 }

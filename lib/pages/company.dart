@@ -38,7 +38,7 @@ class _CompanyPageState extends State<CompanyPage> {
               ),
             ),
             onTap: () {
-              showDialog(
+              /*showDialog(
                 barrierDismissible: false,
                 context: context,
                 child: new CupertinoAlertDialog(
@@ -60,7 +60,8 @@ class _CompanyPageState extends State<CompanyPage> {
                         child: new Text("OK"))
                   ],
                 ),
-              );
+              );*/
+              Navigator.pushNamed(context, "detail");
             },
           );
         });
