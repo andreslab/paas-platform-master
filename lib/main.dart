@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'pages/home.dart';
 import 'pages/company.dart';
 import 'pages/detail.dart';
+import 'pages/dashboard.dart';
 
 
 void main() => runApp(MyApp());
@@ -16,11 +17,12 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue
       ),
-      home: HomePage(),
+      home: DashboardPage(),
       routes: {
         "home": (context) => HomePage(),
         "company": (context) => CompanyPage(),
         "detail": (context) => DetailPage(),
+        "dashboard": (context) => DashboardPage(),
       },
     );
   }  
