@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'home.dart';
 import 'company.dart';
+import 'module.dart';
 
 class DashboardPage extends StatefulWidget {
   @override
@@ -12,7 +13,7 @@ class _DashboardPageState extends State<DashboardPage> {
   double screenWidth, screenHeight;
   final Duration duration = Duration(milliseconds: 300);
 
-  final screen = [HomePage(), CompanyPage()];
+  final screen = [HomePage(), CompanyPage(), ModulePage()];
   int indexPage = 0;
 
   @override
@@ -48,6 +49,13 @@ class _DashboardPageState extends State<DashboardPage> {
                   onTap: () {
                     setState(() {
                       indexPage = 1;
+                    });
+                  }),
+              InkWell(
+                  child: Text("Modulos", style: TextStyle(fontSize: 22)),
+                  onTap: () {
+                     setState(() {
+                      indexPage = 2;
                     });
                   }),
               InkWell(

@@ -3,6 +3,7 @@ import 'pages/home.dart';
 import 'pages/company.dart';
 import 'pages/detail.dart';
 import 'pages/dashboard.dart';
+import 'pages/module.dart';
 
 
 void main() => runApp(MyApp());
@@ -23,6 +24,7 @@ class MyApp extends StatelessWidget {
         "company": (context) => CompanyPage(),
         "detail": (context) => DetailPage(),
         "dashboard": (context) => DashboardPage(),
+        "module": (context) => ModulePage(),
       },
     );
   }  
