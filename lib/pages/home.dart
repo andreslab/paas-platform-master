@@ -4,10 +4,25 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      child: RaisedButton(
-        child: Text("Compañias"),
-        onPressed: () => Navigator.pushNamed(context, "company"),
-      ),
-    );
+        child: Column(
+      children: <Widget>[
+        Container(
+          height: 200,
+          child: PageView.builder(
+            itemCount: 10,
+            controller: PageController(viewportFraction: 0.8),
+            scrollDirection: Axis.horizontal,
+            pageSnapping: true,
+            itemBuilder: (context, position) {
+              return Container(
+                margin: const EdgeInsets.symmetric(horizontal: 8),
+                color: Colors.redAccent,
+                width: 100,
+              );
+            }
+          ),
+        )
+      ],
+    ));
   }
 }
