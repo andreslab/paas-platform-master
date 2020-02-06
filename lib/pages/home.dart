@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../widgets/utils/action_bar.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -6,6 +7,7 @@ class HomePage extends StatelessWidget {
     return Container(
         child: Column(
       children: <Widget>[
+        ActionBarWidget(),
         Container(
           height: 200,
           child: PageView.builder(

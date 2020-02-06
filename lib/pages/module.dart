@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import '../modules/register/register.dart';
+import '../widgets/module_main.dart';
+import '../widgets/utils/action_bar.dart';
 
 class ModulePage extends StatefulWidget {
   @override
@@ -9,8 +10,15 @@ class ModulePage extends StatefulWidget {
 class _ModulePageState extends State<ModulePage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      child: RegisterModule(),
+    return Column(
+      children: <Widget>[
+        ActionBarWidget(),
+        Expanded(
+                  child: Container(
+            child: ModuleMainWidget(),
+          ),
+        ),
+      ],
     );
   }
 }

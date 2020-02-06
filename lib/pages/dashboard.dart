@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'home.dart';
 import 'company.dart';
 import 'module.dart';
+import 'template.dart';
 
 class DashboardPage extends StatefulWidget {
   @override
@@ -13,7 +14,7 @@ class _DashboardPageState extends State<DashboardPage> {
   double screenWidth, screenHeight;
   final Duration duration = Duration(milliseconds: 300);
 
-  final screen = [HomePage(), CompanyPage(), ModulePage()];
+  final screen = [HomePage(), CompanyPage(), ModulePage(), TemplatePage()];
   int indexPage = 0;
 
   @override
@@ -54,14 +55,16 @@ class _DashboardPageState extends State<DashboardPage> {
               InkWell(
                   child: Text("Modulos", style: TextStyle(fontSize: 22)),
                   onTap: () {
-                     setState(() {
+                    setState(() {
                       indexPage = 2;
                     });
                   }),
               InkWell(
                   child: Text("Plantillas", style: TextStyle(fontSize: 22)),
                   onTap: () {
-                    print("plantilla");
+                    setState(() {
+                      indexPage = 3;
+                    });
                   }),
             ],
           )),
@@ -78,30 +81,32 @@ class _DashboardPageState extends State<DashboardPage> {
         left: isCollapsed ? 50 : 250,
         right: 0,
         child: Container(
+            color: Colors.white,
             child: Column(children: [
-          Row(
-            children: <Widget>[
-              InkWell(
-                child: Icon(Icons.menu, color: Colors.white),
-                onTap: () {
-                  setState(() {
-                    isCollapsed = !isCollapsed;
-                  });
-                },
+              Row(
+                children: <Widget>[
+                  InkWell(
+                    child: Icon(Icons.menu, color: Colors.blue),
+                    onTap: () {
+                      setState(() {
+                        isCollapsed = !isCollapsed;
+                      });
+                    },
+                  ),
+                  SizedBox(width: 20,),
+                  Text("Dashboard",
+                      style: TextStyle(fontSize: 24, color: Colors.blue)),
+                  
+                ],
               ),
-              Text("Dashboard",
-                  style: TextStyle(fontSize: 24, color: Colors.white)),
-              Icon(Icons.settings, color: Colors.white),
-            ],
-          ),
-          SizedBox(
-            height: 50,
-          ),
-          Expanded(
-            child: Container(
-              child: screen[indexPage],
-            ),
-          )
-        ])));
+              SizedBox(
+                height: 50,
+              ),
+              Expanded(
+                child: Container(
+                  child: screen[indexPage],
+                ),
+              )
+            ])));
   }
 }

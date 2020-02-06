@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'pages/home.dart';
 import 'pages/company.dart';
-import 'pages/detail.dart';
 import 'pages/dashboard.dart';
 import 'pages/module.dart';
 
@@ -22,7 +21,6 @@ class MyApp extends StatelessWidget {
       routes: {
         "home": (context) => HomePage(),
         "company": (context) => CompanyPage(),
-        "detail": (context) => DetailPage(),
         "dashboard": (context) => DashboardPage(),
         "module": (context) => ModulePage(),
       },
