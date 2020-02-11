@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'pages/home.dart';
-import 'pages/company.dart';
+import 'pages/business.dart';
 import 'pages/dashboard.dart';
 import 'pages/module.dart';
 
@@ -20,7 +20,7 @@ class MyApp extends StatelessWidget {
       home: DashboardPage(),
       routes: {
         "home": (context) => HomePage(),
-        "company": (context) => CompanyPage(),
+        "company": (context) => BusinessPage(),
         "dashboard": (context) => DashboardPage(),
         "module": (context) => ModulePage(),
       },

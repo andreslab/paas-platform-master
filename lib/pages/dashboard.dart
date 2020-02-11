@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'home.dart';
-import 'company.dart';
+import 'business.dart';
 import 'module.dart';
 import 'template.dart';
 
@@ -14,7 +14,7 @@ class _DashboardPageState extends State<DashboardPage> {
   double screenWidth, screenHeight;
   final Duration duration = Duration(milliseconds: 300);
 
-  final screen = [HomePage(), CompanyPage(), ModulePage(), TemplatePage()];
+  final screen = [HomePage(), BusinessPage(), ModulePage(), TemplatePage()];
   int indexPage = 0;
 
   @override

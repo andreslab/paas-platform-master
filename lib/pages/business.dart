@@ -1,31 +1,31 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
 import '../widgets/utils/action_bar.dart';
-import '../widgets/company_main.dart';
+import '../widgets/business_main.dart';
+import '../api/business.dart';
 
-class CompanyPage extends StatefulWidget {
+class BusinessPage extends StatefulWidget {
   @override
-  _CompanyPageState createState() => _CompanyPageState();
+  _BusinessPageState createState() => _BusinessPageState();
 }
 
-class _CompanyPageState extends State<CompanyPage> {
+class _BusinessPageState extends State<BusinessPage> {
+
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-          body: Column(
+      body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
           ActionBarWidget(),
           Expanded(
-                  child: Container(
-            child: CompanyMainWidget(),
+            child: Container(
+              child: BusinessMainWidget(),
+            ),
           ),
-        ),
-          
         ],
       ),
     );
   }
-
-  
 }

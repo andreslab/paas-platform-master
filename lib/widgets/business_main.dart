@@ -1,22 +1,46 @@
 import 'package:flutter/material.dart';
+import '../api/business.dart';
 
-class CompanyMainWidget extends StatefulWidget {
+class BusinessMainWidget extends StatefulWidget {
+
+  /* final int businessCount;
+
+  const BusinessMainWidget({Key key, this.businessCount}): super(key: key);
+ */
   @override
-  _CompanyMainWidgetState createState() => _CompanyMainWidgetState();
+  _BusinessMainWidgetState createState() => _BusinessMainWidgetState();
 }
 
-class _CompanyMainWidgetState extends State<CompanyMainWidget> {
+class _BusinessMainWidgetState extends State<BusinessMainWidget> {
+  
+  final _businessAPI = BusinessAPI();
+    var businessCount = 0;
+
+    _loadBusiness() async {
+      //call request
+      final res = await _businessAPI.getBusinessList(context);
+
+      if (res != null) {
+        print("OK");
+        setState(() {
+          businessCount = res.length;
+        });
+      }
+    }
+
   @override
   Widget build(BuildContext context) {
 
-    Widget companyDetail = Container(
+    _loadBusiness();
+
+    Widget businessDetail = Container(
     child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
       Row(
         children: <Widget>[
           FadeInImage.assetNetwork(
               width: 300,
               height: 300,
-              placeholder: "res/img/img_company.png",
+              placeholder: "res/img/img_business.png",
               image: "https://img.icons8.com/dusk/2x/google-logo--v1.png"),
           /*Container(
               decoration: BoxDecoration(
@@ -76,15 +100,8 @@ class _CompanyMainWidgetState extends State<CompanyMainWidget> {
     ]),
   );
 
-    return Container(
-        color: Colors.white,
-        child: PageView(
-          children: <Widget>[companyGrid, companyDetail],
-        ));
-  }
-
-  Widget companyGrid = GridView.builder(
-      itemCount: 20,
+    Widget businessGrid = GridView.builder(
+      itemCount: businessCount,
       gridDelegate:
           new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 5),
       itemBuilder: (BuildContext context, int index) {
@@ -132,6 +149,15 @@ class _CompanyMainWidgetState extends State<CompanyMainWidget> {
           },
         );
       });
+
+    return Container(
+        color: Colors.white,
+        child: PageView(
+          children: <Widget>[businessGrid, businessDetail],
+        ));
+  }
+
+  
 
   
 
