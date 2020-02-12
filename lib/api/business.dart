@@ -13,7 +13,7 @@ class BusinessAPI {
 
       List<BusinessModel> data = new List();
 
-      var uri = Uri.http(AppConfig.apiHost, "/api/business/list");
+      var uri = Uri.http(AppConfig.apiHost, "/api/business");
 
       final http.Response response = await http.get(uri);
     
@@ -35,6 +35,7 @@ class BusinessAPI {
               business[i]["name"], 
               business[i]["manager_id"], 
               business[i]["type_id"], 
+              business[i]["num_modules"],
               business[i]["created"]));
         }
         

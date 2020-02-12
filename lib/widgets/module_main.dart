@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:paas/model/business.dart';
+import '../api/business.dart';
 
 class ModuleMainWidget extends StatefulWidget {
   @override
@@ -6,18 +8,33 @@ class ModuleMainWidget extends StatefulWidget {
 }
 
 class _ModuleMainWidgetState extends State<ModuleMainWidget> {
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        color: Colors.white,
-        child: PageView(
-          children: <Widget>[listCompany, listModuleByCompany],
-        ));
+
+
+  final _businessAPI = BusinessAPI();
+  //var businessCount = 0;
+  List<BusinessModel> dataBusiness = List<BusinessModel>();
+
+  _loadBusiness() async {
+      //call request
+      final res = await _businessAPI.getBusinessList(context);
+
+      if (res != null) {
+        print("OK");
+        setState(() {
+          //businessCount = res.length;
+          dataBusiness = res;
+        });
+      }
   }
 
-  Widget listCompany = ListView.builder(
-    itemCount: 5,
+  @override
+  Widget build(BuildContext context) {
+    _loadBusiness();
+
+    Widget listCompany = ListView.builder(
+    itemCount: dataBusiness.length,
     itemBuilder: (context, position) {
+      var numModule = dataBusiness[position].numModel; 
       return Container(
           padding: EdgeInsets.all(20),
           child: Row(
@@ -31,9 +48,9 @@ class _ModuleMainWidgetState extends State<ModuleMainWidget> {
                 child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
-                      Text("EMPRESA", style: TextStyle(fontSize: 30)),
+                      Text(dataBusiness[position].name, style: TextStyle(fontSize: 30)),
                       SizedBox(height: 20),
-                      Text("4 MODULOS", style: TextStyle(fontSize: 15))
+                      Text("$numModule MODULOS", style: TextStyle(fontSize: 15))
                     ]),
               ),
               Icon(Icons.arrow_right)
@@ -70,4 +87,13 @@ class _ModuleMainWidgetState extends State<ModuleMainWidget> {
       ));
     },
   );
+
+    return Container(
+        color: Colors.white,
+        child: PageView(
+          children: <Widget>[listCompany, listModuleByCompany],
+        ));
+  }
+
+  
 }
