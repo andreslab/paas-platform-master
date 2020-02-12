@@ -2,42 +2,41 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
-import 'package:paas/model/manager.dart';
+import 'package:paas/model/template.dart';
 import '../config.dart';
 import '../model/business.dart';
 
-class ManagerAPI {
+class TemplateAPI {
 
-  Future<List<ManagerModel>> getManagerByBusiness(BuildContext context) async {
+  Future<List<TemplateModel>> getTemplateList(BuildContext context) async {
 
     try {
 
-      List<ManagerModel> data = new List();
+      List<TemplateModel> data = new List();
 
-      var uri = Uri.http(AppConfig.apiHost, "/api/business/manager");
+      var uri = Uri.http(AppConfig.apiHost, "/api/template");
 
       final http.Response response = await http.get(uri);
     
       //final responseString = response.body;
 
-      print("GET MANAGER LIST | URL: " + uri.toString());
+      print("GET TEMPLATE LIST | URL: " + uri.toString());
 
       final parsed = jsonDecode(response.body);
 
       if (response.statusCode == 200) {
-        final manager = parsed["data"] as List;
+        final template = parsed["data"] as List;
         print("response 200: ${response.body}");
-        print("response 200: ${manager.toString()}");
+        print("response 200: ${template.toString()}");
         
-        //save manager
-        for(var i = 0; i < manager.length; i++) {
-            data.add(ManagerModel(
-              manager[i]["id"], 
-              manager[i]["name"], 
-              manager[i]["last_name"], 
-              manager[i]["phone"], 
-              manager[i]["email"],
-              manager[i]["created"]));
+        //save template
+        for(var i = 0; i < template.length; i++) {
+            data.add(TemplateModel(
+              template[i]["id"], 
+              template[i]["name"], 
+              template[i]["status"], 
+              template[i]["last_update"], 
+              template[i]["created"]));
         }
         
         return data;
@@ -46,7 +45,7 @@ class ManagerAPI {
         throw PlatformException(code: "500", message: parsed["message"]);
       }
 
-      throw PlatformException(code: "201", message: "Error getManager");
+      throw PlatformException(code: "201", message: "Error getTemplateList");
 
     } on PlatformException catch(e){
       print("Error ${e.code}:${e.message}");
