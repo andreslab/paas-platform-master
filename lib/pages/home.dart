@@ -7,7 +7,7 @@ class HomePage extends StatelessWidget {
     return Container(
         child: Column(
       children: <Widget>[
-        ActionBarWidget(),
+        ActionBarWidget(menu: 0,),
         Container(
           height: 200,
           child: PageView.builder(

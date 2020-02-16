@@ -12,7 +12,7 @@ class _ModulePageState extends State<ModulePage> {
   Widget build(BuildContext context) {
     return Column(
       children: <Widget>[
-        ActionBarWidget(),
+        ActionBarWidget(menu: 2,),
         Expanded(
                   child: Container(
             child: ModuleMainWidget(),

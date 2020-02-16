@@ -5,6 +5,7 @@ import 'module.dart';
 import 'template.dart';
 
 class DashboardPage extends StatefulWidget {
+
   @override
   _DashboardPageState createState() => _DashboardPageState();
 }
@@ -93,10 +94,11 @@ class _DashboardPageState extends State<DashboardPage> {
                       });
                     },
                   ),
-                  SizedBox(width: 20,),
+                  SizedBox(
+                    width: 20,
+                  ),
                   Text("Dashboard",
                       style: TextStyle(fontSize: 24, color: Colors.blue)),
-                  
                 ],
               ),
               SizedBox(

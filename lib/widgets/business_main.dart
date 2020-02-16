@@ -1,8 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:paas/providers/business_bar.dart';
+import 'package:provider/provider.dart';
 import '../api/business.dart';
 
 class BusinessMainWidget extends StatefulWidget {
-
   /* final int businessCount;
 
   const BusinessMainWidget({Key key, this.businessCount}): super(key: key);
@@ -12,37 +13,37 @@ class BusinessMainWidget extends StatefulWidget {
 }
 
 class _BusinessMainWidgetState extends State<BusinessMainWidget> {
-  
   final _businessAPI = BusinessAPI();
-    var businessCount = 0;
+  var businessCount = 0;
 
-    _loadBusiness() async {
-      //call request
-      final res = await _businessAPI.getBusinessList(context);
+  _loadBusiness() async {
+    //call request
+    final res = await _businessAPI.getBusinessList(context);
 
-      if (res != null) {
-        print("OK");
-        setState(() {
-          businessCount = res.length;
-        });
-      }
+    if (res != null) {
+      print("OK");
+      setState(() {
+        businessCount = res.length;
+      });
     }
+  }
 
   @override
   Widget build(BuildContext context) {
-
     _loadBusiness();
 
+    final businessInfo = Provider.of<BusinessBar>(context);
+
     Widget businessDetail = Container(
-    child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-      Row(
-        children: <Widget>[
-          FadeInImage.assetNetwork(
-              width: 300,
-              height: 300,
-              placeholder: "res/img/img_business.png",
-              image: "https://img.icons8.com/dusk/2x/google-logo--v1.png"),
-          /*Container(
+      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
+        Row(
+          children: <Widget>[
+            FadeInImage.assetNetwork(
+                width: 300,
+                height: 300,
+                placeholder: "res/img/img_business.png",
+                image: "https://img.icons8.com/dusk/2x/google-logo--v1.png"),
+            /*Container(
               decoration: BoxDecoration(
                 image: DecorationImage(
                   image: AssetImage("res/img/img_bg_ad_slide.png"),
@@ -50,31 +51,31 @@ class _BusinessMainWidgetState extends State<BusinessMainWidget> {
                 ),
               ),
             ),*/
-          Text(
-            "Nombre de empresa",
-            style: TextStyle(fontSize: 25),
-          )
-        ],
-      ),
-      Text(
-        "Módulos",
-        style: TextStyle(fontSize: 20),
-      ),
-      Wrap(
+            Text(
+              "Nombre de empresa",
+              style: TextStyle(fontSize: 25),
+            )
+          ],
+        ),
+        Text(
+          "Módulos",
+          style: TextStyle(fontSize: 20),
+        ),
+        Wrap(
           spacing: 0.0, // gap between adjacent chips
-                  runSpacing: 0.0, // gap between lines
-                  children: <Widget>[
-                    module("modulo1", true),
-                    module("modulo2", true),
-                    module("modulo3", true),
-                    module("modulo4", false),
-                    module("modulo5", false),
-                    module("modulo6", true),
-                    module("modulo7", true),
-                    module("modulo8", false),
-                    
-                  ],),
-      /*Container(
+          runSpacing: 0.0, // gap between lines
+          children: <Widget>[
+            module("modulo1", true),
+            module("modulo2", true),
+            module("modulo3", true),
+            module("modulo4", false),
+            module("modulo5", false),
+            module("modulo6", true),
+            module("modulo7", true),
+            module("modulo8", false),
+          ],
+        ),
+        /*Container(
           child: Expanded(
               child: GridView.builder(
                   itemCount: 5,
@@ -97,32 +98,31 @@ class _BusinessMainWidgetState extends State<BusinessMainWidget> {
                       ],
                     );
                   })))*/
-    ]),
-  );
+      ]),
+    );
 
     Widget businessGrid = GridView.builder(
-      itemCount: businessCount,
-      gridDelegate:
-          new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 5),
-      itemBuilder: (BuildContext context, int index) {
-        return new GestureDetector(
-          child: new Card(
-            elevation: 5.0,
-            child: new Container(
-              alignment: Alignment.center,
-              child: Center(
-                child: Stack(
-                  children: [
-                    Placeholder(fallbackHeight: 50,fallbackWidth: 50,),
-                    Text('Item $index'),
-                  ]
-                ),
-              )
-              
+        itemCount: businessCount,
+        gridDelegate:
+            new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 5),
+        itemBuilder: (BuildContext context, int index) {
+          return new GestureDetector(
+            child: new Card(
+              elevation: 5.0,
+              child: new Container(
+                  alignment: Alignment.center,
+                  child: Center(
+                    child: Stack(children: [
+                      Placeholder(
+                        fallbackHeight: 50,
+                        fallbackWidth: 50,
+                      ),
+                      Text('Item $index'),
+                    ]),
+                  )),
             ),
-          ),
-          onTap: () {
-            /*showDialog(
+            onTap: () {
+              /*showDialog(
                 barrierDismissible: false,
                 context: context,
                 child: new CupertinoAlertDialog(
@@ -145,35 +145,39 @@ class _BusinessMainWidgetState extends State<BusinessMainWidget> {
                   ],
                 ),
               );*/
-            Navigator.pushNamed(context, "detail");
-          },
-        );
-      });
+              Navigator.pushNamed(context, "detail");
+            },
+          );
+        });
 
-    return Container(
-        color: Colors.white,
-        child: PageView(
-          children: <Widget>[businessGrid, businessDetail],
-        ));
+    List<Widget> pages = [
+      PageView(
+        children: <Widget>[businessGrid, businessDetail],
+      ),
+      Container(
+        child: Text("Pagina 1"),
+      ),
+      Container(
+        child: Text("Pagina 2"),
+      ),
+    ];
+
+    return Container(color: Colors.white, child: pages[businessInfo.indexPage]);
   }
 
-  
-
-  
-
   Widget module(String label, bool isActive) => Container(
-      child: Row(
-    children: <Widget>[
-      Text(label),
-      Checkbox(
-        value: isActive,
-        onChanged: (bool value) {
-          /*setState(() {
+          child: Row(
+        children: <Widget>[
+          Text(label),
+          Checkbox(
+            value: isActive,
+            onChanged: (bool value) {
+              /*setState(() {
                                 isActiveModule = value;
                               });*/
-          print("...");
-        },
-      )
-    ],
-  ));
+              print("...");
+            },
+          )
+        ],
+      ));
 }

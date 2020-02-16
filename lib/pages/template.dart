@@ -12,7 +12,7 @@ class _TemplatePageState extends State<TemplatePage> {
     return Container(
       child: Column(
         children: [
-          ActionBarWidget(),
+          ActionBarWidget(menu: 3,),
           Container()
         ]
       ),

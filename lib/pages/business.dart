@@ -18,7 +18,7 @@ class _BusinessPageState extends State<BusinessPage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          ActionBarWidget(),
+          ActionBarWidget(menu: 1,),
           Expanded(
             child: Container(
               child: BusinessMainWidget(),
