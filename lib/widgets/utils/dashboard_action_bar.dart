@@ -5,12 +5,12 @@ import 'package:paas/providers/module_bar.dart';
 import 'package:paas/providers/template_bar.dart';
 import 'package:provider/provider.dart';
 
-class ActionBarWidget extends StatefulWidget {
+class DashboardActionBarWidget extends StatefulWidget {
   final int menu;
-  ActionBarWidget({this.menu});
+  DashboardActionBarWidget({this.menu});
 
   @override
-  _ActionBarWidgetState createState() => _ActionBarWidgetState();
+  _DashboardActionBarWidgetState createState() => _DashboardActionBarWidgetState();
 }
 
 class Categories {
@@ -31,7 +31,7 @@ class RangeDate {
   RangeDate(this.id, this.name);
 }
 
-class _ActionBarWidgetState extends State<ActionBarWidget> {
+class _DashboardActionBarWidgetState extends State<DashboardActionBarWidget> {
   List<Categories> categories = [
     Categories(0, "cat 1"),
     Categories(1, "cat 2"),

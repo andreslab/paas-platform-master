@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class HomeBar with ChangeNotifier {
   int _indexPage = 0;
+  int _indexMenu = 0;
 
   get indexPage {
     return _indexPage;
@@ -9,6 +10,15 @@ class HomeBar with ChangeNotifier {
 
   set indexPage(int i) {
     this._indexPage = i;
+    notifyListeners();
+  }
+
+  get indexMenu {
+    return _indexMenu;
+  }
+
+  set indexMenu(int i) {
+    this._indexMenu = i;
     notifyListeners();
   }
 }

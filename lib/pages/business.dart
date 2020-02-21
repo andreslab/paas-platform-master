@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/cupertino.dart';
-import '../widgets/utils/action_bar.dart';
+import '../widgets/utils/business_action_bar.dart';
 import '../widgets/business_main.dart';
 import '../api/business.dart';
 
@@ -18,7 +18,7 @@ class _BusinessPageState extends State<BusinessPage> {
       body: Column(
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: <Widget>[
-          ActionBarWidget(menu: 1,),
+          BusinessActionBarWidget(menu: 1,),
           Expanded(
             child: Container(
               child: BusinessMainWidget(),

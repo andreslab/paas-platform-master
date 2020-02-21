@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../widgets/utils/action_bar.dart';
+import '../widgets/utils/dashboard_action_bar.dart';
 
 class HomePage extends StatelessWidget {
   @override
@@ -7,7 +7,7 @@ class HomePage extends StatelessWidget {
     return Container(
         child: Column(
       children: <Widget>[
-        ActionBarWidget(menu: 0,),
+        DashboardActionBarWidget(menu: 0,),
         Container(
           height: 200,
           child: PageView.builder(

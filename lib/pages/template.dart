@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../widgets/utils/action_bar.dart';
+import '../widgets/utils/template_action_bar.dart';
 
 class TemplatePage extends StatefulWidget {
   @override
@@ -12,7 +12,7 @@ class _TemplatePageState extends State<TemplatePage> {
     return Container(
       child: Column(
         children: [
-          ActionBarWidget(menu: 3,),
+          TemplateActionBarWidget(menu: 3,),
           Container()
         ]
       ),

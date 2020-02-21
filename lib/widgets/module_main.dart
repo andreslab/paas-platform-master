@@ -1,6 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:paas/model/business.dart';
+import 'package:paas/model/module.dart';
 import 'package:paas/providers/module_bar.dart';
+import 'package:paas/widgets/module_business_list.dart';
+import 'package:paas/widgets/module_edit.dart';
+import 'package:paas/widgets/module_list_by_business.dart';
+import 'package:paas/widgets/module_list_general.dart';
 import 'package:provider/provider.dart';
 import '../api/business.dart';
 
@@ -13,6 +18,9 @@ class _ModuleMainWidgetState extends State<ModuleMainWidget> {
   final _businessAPI = BusinessAPI();
   //var businessCount = 0;
   List<BusinessModel> dataBusiness = List<BusinessModel>();
+  List<ModuleModel> dataModuleByBusiness = List<ModuleModel>();
+  List<ModuleModel> dataModule = List<ModuleModel>();
+  ModuleModel module = ModuleModel(0, "","","","");
 
   _loadBusiness() async {
     //call request
@@ -33,80 +41,11 @@ class _ModuleMainWidgetState extends State<ModuleMainWidget> {
 
     final moduleInfo = Provider.of<ModuleBar>(context);
 
-    Widget listCompany = ListView.builder(
-      itemCount: dataBusiness.length,
-      itemBuilder: (context, position) {
-        var numModule = dataBusiness[position].numModel;
-        return Container(
-            padding: EdgeInsets.all(20),
-            child: Row(
-              children: <Widget>[
-                Placeholder(
-                  fallbackHeight: 40,
-                  fallbackWidth: 40,
-                ),
-                SizedBox(width: 20),
-                Expanded(
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Text(dataBusiness[position].name,
-                            style: TextStyle(fontSize: 30)),
-                        SizedBox(height: 20),
-                        Text("$numModule MODULOS",
-                            style: TextStyle(fontSize: 15))
-                      ]),
-                ),
-                Icon(Icons.arrow_right)
-              ],
-            ));
-      },
-    );
-
-    Widget listModuleByCompany = ListView.builder(
-      itemCount: 5,
-      itemBuilder: (context, position) {
-        return Container(
-            padding: EdgeInsets.all(20),
-            child: Row(
-              children: <Widget>[
-                Checkbox(
-                  value: true,
-                  onChanged: (bool value) {
-                    print("...");
-                  },
-                ),
-                SizedBox(
-                  width: 20,
-                ),
-                Expanded(
-                  child: Column(
-                      crossAxisAlignment: CrossAxisAlignment.stretch,
-                      children: [
-                        Text("REGISTRO", style: TextStyle(fontSize: 20)),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        Text("Plantilla: Personlizada",
-                            style: TextStyle(fontSize: 12)),
-                      ]),
-                ),
-                Text("12/04/2019"),
-              ],
-            ));
-      },
-    );
-
     List<Widget> pages = [
-      PageView(
-        children: <Widget>[listCompany, listModuleByCompany],
-      ),
-      Container(
-        child: Text("Pagina 1"),
-      ),
-      Container(
-        child: Text("Pagina 2"),
-      ),
+      ModuleBusinessListWidget(dataBusiness),
+      ModuleListByBusinessWidget(dataModuleByBusiness),
+      ModuleListGeneralWidget(dataModule),
+      ModuleEditWidget(module)
     ];
 
     return Container(color: Colors.white, child: pages[moduleInfo.indexPage]);
