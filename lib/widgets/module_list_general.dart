@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:paas/api/module.dart';
 import 'package:paas/model/module.dart';
 import 'package:provider/provider.dart';
 import 'package:paas/providers/module_bar.dart';
@@ -14,13 +15,33 @@ class ModuleListGeneralWidget extends StatefulWidget {
 }
 
 class _ModuleListGeneralWidgetState extends State<ModuleListGeneralWidget> {
+
+
+  final _moduleAPI = ModuleAPI();
+  var moduleCount = 0;
+
+  _loadModule() async {
+    //call request
+    final res = await _moduleAPI.getModuleList(context);
+
+    if (res != null) {
+      print("OK");
+      setState(() {
+        moduleCount = res.length;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final moduleInfo = Provider.of<ModuleBar>(context);
 
+
+    _loadModule();
+
     return Container(
       child: ListView.builder(
-        itemCount: 5,
+        itemCount: moduleCount,
         itemBuilder: (context, position) {
           return InkWell(
             onTap: () {
