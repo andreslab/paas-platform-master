@@ -11,10 +11,10 @@ class ModuleModel{
 
 class ModuleByBusinessModel{
   final int id;
-  final int business_id;
-  final int module_id;
-  final bool is_activate;
+  final int businessId;
+  final int moduleId;
+  final int isActivate;
   final String created;
 
-  ModuleByBusinessModel(this.id, this.business_id,this.module_id, this.is_activate, this.created);
+  ModuleByBusinessModel(this.id, this.businessId,this.moduleId, this.isActivate, this.created);
 }

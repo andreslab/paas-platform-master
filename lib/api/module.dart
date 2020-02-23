@@ -20,7 +20,7 @@ class ModuleAPI {
     
       //final responseString = response.body;
 
-      print("GET MODULE LIST | URL: " + uri.toString());
+      print("GET MODULE LIST | CODE:${response.statusCode} | URL: " + uri.toString());
 
       final parsed = jsonDecode(response.body);
 
@@ -68,7 +68,7 @@ class ModuleAPI {
     
       //final responseString = response.body;
 
-      print("GET MODULE LIST | URL: " + uri.toString());
+      print("GET MODULE LIST BUSINESS | CODE:${response.statusCode} | URL: " + uri.toString());
 
       final parsed = jsonDecode(response.body);
 
@@ -86,6 +86,8 @@ class ModuleAPI {
               module[i]["is_activate"], 
               module[i]["created"]));
         }
+
+        print("casas: ${data.length}");
         
         return data;
       }else if (response.statusCode == 500){
@@ -104,20 +106,20 @@ class ModuleAPI {
     }
   }
 
-  Future<bool> setModuleByBusiness(BuildContext context, int module_id, int business_id) async {
+  Future<bool> setModuleByBusiness(BuildContext context, int moduleId, int businessId) async {
 
     try {
 
       var uri = Uri.http(AppConfig.apiHost, "/api/business/modules/0");
 
       Map<String, String> headers = {"Content-type": "application/json"};
-      String json = '{"module_id":$module_id,"business_id":$business_id}';
+      String json = '{"module_id":$moduleId,"business_id":$businessId}';
 
       final http.Response response = await http.post(uri, headers: headers, body: json);
     
       //final responseString = response.body;
 
-      print("GET MODULE LIST | URL: " + uri.toString());
+      print("SET MODULE BY BUSINESS | CODE:${response.statusCode} | URL: " + uri.toString());
 
       final parsed = jsonDecode(response.body);
 

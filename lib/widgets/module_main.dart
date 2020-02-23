@@ -18,9 +18,9 @@ class _ModuleMainWidgetState extends State<ModuleMainWidget> {
   final _businessAPI = BusinessAPI();
   //var businessCount = 0;
   List<BusinessModel> dataBusiness = List<BusinessModel>();
-  List<ModuleModel> dataModuleByBusiness = List<ModuleModel>();
+  BusinessModel dataModuleByBusiness = BusinessModel(1, "Andreslab", 1,1,1, "");
   List<ModuleModel> dataModule = List<ModuleModel>();
-  ModuleModel module = ModuleModel(0, "","","","");
+  ModuleModel module = ModuleModel(1, "","","","");
 
   _loadBusiness() async {
     //call request

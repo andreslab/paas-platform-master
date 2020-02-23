@@ -3,9 +3,10 @@ import 'package:paas/providers/business_bar.dart';
 import 'package:paas/providers/home_bar.dart';
 import 'package:paas/providers/module_bar.dart';
 import 'package:paas/providers/template_bar.dart';
+import 'package:paas/widgets/utils/mixin/module_mixin.dart';
 import 'package:provider/provider.dart';
 
-class ModuleActionBarWidget extends StatefulWidget {
+class ModuleActionBarWidget extends StatefulWidget with EventModuleBar {
   final int menu;
   ModuleActionBarWidget({this.menu});
 
@@ -38,7 +39,7 @@ class _ModuleActionBarWidgetState extends State<ModuleActionBarWidget> {
             ),
             RaisedButton(
               child: Icon(Icons.filter_list),
-              onPressed: () => print("filtro"),
+              onPressed: () => widget.showFilterView(),
             )
           ],
         ));
@@ -49,20 +50,14 @@ class _ModuleActionBarWidgetState extends State<ModuleActionBarWidget> {
         children: <Widget>[
           RaisedButton(
             child: Icon(Icons.arrow_back),
-            onPressed: () {
-              moduleInfo.indexPage = 0;
-              moduleInfo.indexMenu = 0;
-            },
+            onPressed: () => widget.goModuleMain(moduleInfo),
           ),
           SizedBox(
             width: 20,
           ),
           RaisedButton(
               child: Text("Nuevo"),
-              onPressed: () {
-                moduleInfo.indexPage = 2; //moduleListGeneral
-                moduleInfo.indexMenu = 2; //moduleListGeneralBar
-              }),
+              onPressed: () => widget.goModuleList(moduleInfo)),
           SizedBox(
             width: 20,
           ),
@@ -77,7 +72,7 @@ class _ModuleActionBarWidgetState extends State<ModuleActionBarWidget> {
           ),
           RaisedButton(
             child: Icon(Icons.filter_list),
-            onPressed: () => print("filtro"),
+            onPressed: () => widget.showFilterView(),
           )
         ],
       ),
@@ -99,17 +94,14 @@ class _ModuleActionBarWidgetState extends State<ModuleActionBarWidget> {
               ),
               RaisedButton(
                 child: Icon(Icons.filter_list),
-                onPressed: () => print("filtro"),
+                onPressed: () => widget.goModuleEdit(moduleInfo),
               ),
               SizedBox(
                 width: 20,
               ),
               RaisedButton(
                 child: Icon(Icons.close),
-                onPressed: () {
-                  moduleInfo.indexPage = 1;
-                  moduleInfo.indexMenu = 1;
-                },
+                onPressed: () => widget.goModuleBusinessList(moduleInfo),
               )
         ],
       ),
@@ -122,16 +114,11 @@ class _ModuleActionBarWidgetState extends State<ModuleActionBarWidget> {
         children: <Widget>[
           RaisedButton(
               child: Text("Guardar"),
-              onPressed: () {
-                moduleInfo.indexPage = 1;
-                moduleInfo.indexMenu = 1;
-              }),
+              onPressed: () => widget.addModule(context, moduleInfo,1, 1)
+              ),
           RaisedButton(
             child: Icon(Icons.close),
-            onPressed: () {
-              moduleInfo.indexPage = 1;
-              moduleInfo.indexMenu = 1;
-            },
+            onPressed: () => widget.goModuleBusinessList(moduleInfo),
           )
         ],
       ),
