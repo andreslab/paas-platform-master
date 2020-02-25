@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:paas/model/business.dart';
+import 'package:paas/model/module.dart';
 import 'package:paas/providers/business_bar.dart';
 import 'package:paas/providers/home_bar.dart';
 import 'package:paas/providers/module_bar.dart';
@@ -114,7 +116,11 @@ class _ModuleActionBarWidgetState extends State<ModuleActionBarWidget> {
         children: <Widget>[
           RaisedButton(
               child: Text("Guardar"),
-              onPressed: () => widget.addModule(context, moduleInfo,1, 1)
+              onPressed: () {
+                ModuleModel moduleModel =  moduleInfo.moduleSelected;
+                BusinessModel businessModel =  moduleInfo.businessSelected;
+                widget.addModule(context, moduleInfo,moduleModel.id, businessModel.id);
+                }
               ),
           RaisedButton(
             child: Icon(Icons.close),

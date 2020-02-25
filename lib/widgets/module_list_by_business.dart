@@ -2,12 +2,14 @@ import 'package:flutter/material.dart';
 import 'package:paas/api/module.dart';
 import 'package:paas/model/business.dart';
 import 'package:paas/model/module.dart';
+import 'package:paas/providers/module_bar.dart';
+import 'package:provider/provider.dart';
 
 class ModuleListByBusinessWidget extends StatefulWidget {
 
-  BusinessModel business;
+  /* BusinessModel business;
 
-  ModuleListByBusinessWidget(this.business);
+  ModuleListByBusinessWidget(this.business); */
 
   @override
   _ModuleListByBusinessWidgetState createState() => _ModuleListByBusinessWidgetState();
@@ -19,9 +21,9 @@ class _ModuleListByBusinessWidgetState extends State<ModuleListByBusinessWidget>
   var moduleCount = 0;
   List<ModuleByBusinessModel> modules = List<ModuleByBusinessModel>(); 
 
-  _loadModule() async {
+  _loadModule(BusinessModel model) async {
     //call request
-    final res = await _moduleAPI.getModuleListByBusiness(context, widget.business.id);
+    final res = await _moduleAPI.getModuleListByBusiness(context, model.id);
 
     if (res != null) {
       setState(() {
@@ -34,7 +36,11 @@ class _ModuleListByBusinessWidgetState extends State<ModuleListByBusinessWidget>
   @override
   Widget build(BuildContext context) {
 
-    _loadModule();
+    final moduleInfo = Provider.of<ModuleBar>(context);
+
+    BusinessModel business = moduleInfo.businessSelected;
+
+    _loadModule(business);
 
     return Container(
       child: ListView.builder(

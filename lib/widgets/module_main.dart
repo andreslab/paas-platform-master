@@ -16,11 +16,8 @@ class ModuleMainWidget extends StatefulWidget {
 
 class _ModuleMainWidgetState extends State<ModuleMainWidget> {
   final _businessAPI = BusinessAPI();
-  //var businessCount = 0;
+
   List<BusinessModel> dataBusiness = List<BusinessModel>();
-  BusinessModel dataModuleByBusiness = BusinessModel(1, "Andreslab", 1,1,1, "");
-  List<ModuleModel> dataModule = List<ModuleModel>();
-  ModuleModel module = ModuleModel(1, "","","","");
 
   _loadBusiness() async {
     //call request
@@ -29,7 +26,6 @@ class _ModuleMainWidgetState extends State<ModuleMainWidget> {
     if (res != null) {
       print("OK");
       setState(() {
-        //businessCount = res.length;
         dataBusiness = res;
       });
     }
@@ -37,15 +33,18 @@ class _ModuleMainWidgetState extends State<ModuleMainWidget> {
 
   @override
   Widget build(BuildContext context) {
+
+    
     _loadBusiness();
 
     final moduleInfo = Provider.of<ModuleBar>(context);
+  
 
     List<Widget> pages = [
       ModuleBusinessListWidget(dataBusiness),
-      ModuleListByBusinessWidget(dataModuleByBusiness),
-      ModuleListGeneralWidget(dataModule),
-      ModuleEditWidget(module)
+      ModuleListByBusinessWidget(),
+      ModuleListGeneralWidget(),
+      ModuleEditWidget()
     ];
 
     return Container(color: Colors.white, child: pages[moduleInfo.indexPage]);

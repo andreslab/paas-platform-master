@@ -28,6 +28,7 @@ class _ModuleBusinessListWidgetState extends State<ModuleBusinessListWidget> {
           onTap: (){
             moduleInfo.indexPage = 1;
             moduleInfo.indexMenu = 1;
+            moduleInfo.businessSelected = widget.dataBusiness[position];
           },
                   child: Container(
               padding: EdgeInsets.all(20),

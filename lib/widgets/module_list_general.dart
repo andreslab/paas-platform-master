@@ -5,9 +5,9 @@ import 'package:provider/provider.dart';
 import 'package:paas/providers/module_bar.dart';
 
 class ModuleListGeneralWidget extends StatefulWidget {
-  List<ModuleModel> dataModule;
+  /* List<ModuleModel> dataModule;
 
-  ModuleListGeneralWidget(this.dataModule);
+  ModuleListGeneralWidget(this.dataModule); */
 
   @override
   _ModuleListGeneralWidgetState createState() =>
@@ -19,6 +19,7 @@ class _ModuleListGeneralWidgetState extends State<ModuleListGeneralWidget> {
 
   final _moduleAPI = ModuleAPI();
   var moduleCount = 0;
+  List<ModuleModel> modules = List<ModuleModel>(); 
 
   _loadModule() async {
     //call request
@@ -28,6 +29,7 @@ class _ModuleListGeneralWidgetState extends State<ModuleListGeneralWidget> {
       print("OK");
       setState(() {
         moduleCount = res.length;
+        modules = res;
       });
     }
   }
@@ -35,8 +37,7 @@ class _ModuleListGeneralWidgetState extends State<ModuleListGeneralWidget> {
   @override
   Widget build(BuildContext context) {
     final moduleInfo = Provider.of<ModuleBar>(context);
-
-
+    
     _loadModule();
 
     return Container(
@@ -47,6 +48,7 @@ class _ModuleListGeneralWidgetState extends State<ModuleListGeneralWidget> {
             onTap: () {
               moduleInfo.indexPage = 3; //editPage: 3
               moduleInfo.indexMenu = 3; //editMenu: 2
+              moduleInfo.moduleSelected = modules[position];
             },
             child: Container(
                 padding: EdgeInsets.all(20),
@@ -56,15 +58,15 @@ class _ModuleListGeneralWidgetState extends State<ModuleListGeneralWidget> {
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Text("REGISTRO", style: TextStyle(fontSize: 20)),
+                            Text(modules[position].name.toUpperCase(), style: TextStyle(fontSize: 20)),
                             SizedBox(
                               height: 10,
                             ),
-                            Text("Categoria: Usuarios",
+                            Text("Status: ${modules[position].status}",
                                 style: TextStyle(fontSize: 12)),
                           ]),
                     ),
-                    Text("12/04/2019"),
+                    Text(modules[position].lastUpdate),
                   ],
                 )),
           );
