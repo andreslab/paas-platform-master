@@ -1,0 +1,3 @@
+[submodule "PBusiness/PRJ_PLATFORM_BUSINESS_PAAS_FLUTTER"]
+	path = PBusiness/PRJ_PLATFORM_BUSINESS_PAAS_FLUTTER
+	url = https://github.com/andreslab/PRJ_PLATFORM_BUSINESS_PAAS_FLUTTER.git
