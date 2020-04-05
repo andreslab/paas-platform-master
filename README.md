@@ -1,16 +1,11 @@
 # paas
 
-A new Flutter project.
-
 ## Getting Started
 
-This project is a starting point for a Flutter application.
+This project has a submodule in folder PBusiness.
+[Platform for business](https://github.com/andreslab/PRJ_PLATFORM_BUSINESS_PAAS_FLUTTER)
 
-A few resources to get you started if this is your first Flutter project:
+Add Submodule:
 
-- [Lab: Write your first Flutter app](https://flutter.dev/docs/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://flutter.dev/docs/cookbook)
-
-For help getting started with Flutter, view our
-[online documentation](https://flutter.dev/docs), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- git submodule init
+- git submodule update
