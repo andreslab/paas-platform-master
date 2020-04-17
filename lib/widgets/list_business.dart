@@ -1,32 +1,26 @@
 import 'package:flutter/material.dart';
 import 'package:paas/model/business.dart';
+import 'package:paas/providers/business/business_bar.dart';
 import 'package:paas/providers/business/module_bar.dart';
-import 'package:paas/providers/modules/module_bar.dart';
 import 'package:provider/provider.dart';
 import '../utils/utils.dart';
 
-class ModuleBusinessListWidget extends StatefulWidget {
+class ListBusinessWidget extends StatefulWidget {
 
   List<BusinessModel> dataBusiness;
-  Section section;
+  SECTION section;
 
-  ModuleBusinessListWidget(this.dataBusiness, this.section);
+  ListBusinessWidget(this.dataBusiness, this.section);
 
   @override
-  _ModuleBusinessListWidgetState createState() => _ModuleBusinessListWidgetState();
+  _ListBusinessWidgetState createState() => _ListBusinessWidgetState();
 }
 
-class _ModuleBusinessListWidgetState extends State<ModuleBusinessListWidget> {
+class _ListBusinessWidgetState extends State<ListBusinessWidget> {
   @override
   Widget build(BuildContext context) {
 
-    var moduleInfo;
-
-    if(widget.section == Section.BUSINESS){
-       moduleInfo = Provider.of<BModuleBar>(context);
-    }else{
-       moduleInfo = Provider.of<MModuleBar>(context);
-    }
+    var moduleInfo = Provider.of<BModuleBar>(context);
 
     return Container(
       child: ListView.builder(
@@ -35,15 +29,9 @@ class _ModuleBusinessListWidgetState extends State<ModuleBusinessListWidget> {
         var numModule = widget.dataBusiness[position].numModel;
         return InkWell(
           onTap: (){
-
-            if(widget.section == Section.BUSINESS){
-              moduleInfo.indexPage = 1;
-              moduleInfo.indexMenu = 1;
-              moduleInfo.businessSelected = widget.dataBusiness[position];
-            }else{
-              moduleInfo.indexPage = 1;
-              moduleInfo.indexMenu = 1;
-            }
+            moduleInfo.indexPage = NAVIGATOR_BUSINESS_MODULE.PAGE_LIST_BUSINESS_MODULES;
+            moduleInfo.indexMenu = 1;
+            moduleInfo.businessSelected = widget.dataBusiness[position];
           },
                   child: Container(
               padding: EdgeInsets.all(20),

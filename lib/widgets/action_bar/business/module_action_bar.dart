@@ -23,7 +23,7 @@ class _ModuleActionBarWidgetState extends State<ModuleActionBarWidget> {
       print(textEditingController.text);
     });
 
-    Widget moduleBusinessBar = Padding(
+    Widget listBusinessBar = Padding(
         padding: EdgeInsets.only(left: 20, right: 20),
         child: Row(
           children: <Widget>[
@@ -43,7 +43,7 @@ class _ModuleActionBarWidgetState extends State<ModuleActionBarWidget> {
           ],
         ));
 
-    Widget moduleListBar = Padding(
+    Widget listModulesByBusinessBar = Padding(
       padding: EdgeInsets.only(left: 20, right: 20),
       child: Row(
         children: <Widget>[
@@ -77,7 +77,7 @@ class _ModuleActionBarWidgetState extends State<ModuleActionBarWidget> {
       ),
     );
 
-    Widget moduleListGeneralBar = Padding(
+    Widget listModulesBar = Padding(
       padding: EdgeInsets.only(left: 20, right: 20),
       child: Row(
         //mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -106,7 +106,7 @@ class _ModuleActionBarWidgetState extends State<ModuleActionBarWidget> {
       ),
     );
 
-    Widget moduleEditBar = Padding(
+    Widget editModuleBar = Padding(
       padding: EdgeInsets.only(left: 20, right: 20),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -128,10 +128,10 @@ class _ModuleActionBarWidgetState extends State<ModuleActionBarWidget> {
     );
 
     List<Widget> bars = <Widget>[
-      moduleBusinessBar,
-      moduleListBar,
-      moduleListGeneralBar,
-      moduleEditBar
+      listBusinessBar,
+      listModulesByBusinessBar,
+      listModulesBar,
+      editModuleBar
     ];
 
     return Container(

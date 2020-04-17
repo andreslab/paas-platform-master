@@ -5,7 +5,7 @@ import 'package:paas/providers/business/module_bar.dart';
 import 'package:paas/widgets/list_business.dart';
 import 'package:paas/widgets/edit_module.dart';
 import 'package:paas/widgets/list_modules_by_business.dart';
-import 'package:paas/widgets/list_modules_general.dart';
+import 'package:paas/widgets/list_modules.dart';
 import 'package:provider/provider.dart';
 import 'package:paas/api/business.dart';
 import 'package:paas/utils/utils.dart';
@@ -36,18 +36,23 @@ class _BModuleNavigatorWidgetState extends State<BModuleNavigatorWidget> {
   Widget build(BuildContext context) {
 
     
-    _loadBusiness();
+    if (dataBusiness.length == 0){
+      _loadBusiness();
+    }
 
     final moduleInfo = Provider.of<BModuleBar>(context);
   
 
-    List<Widget> pages = [
-      ModuleBusinessListWidget(dataBusiness, Section.BUSINESS),
-      ModuleListByBusinessWidget(Section.BUSINESS),
-      ModuleListGeneralWidget(Section.BUSINESS),
-      ModuleEditWidget(Section.BUSINESS)
-    ];
 
-    return Container(color: Colors.white, child: pages[moduleInfo.indexPage]);
+    switch (moduleInfo.indexPage) {
+      case NAVIGATOR_BUSINESS_MODULE.PAGE_MAIN_LIST_BUSINESS:
+        return ListBusinessWidget(dataBusiness, SECTION.BUSINESS);
+      case NAVIGATOR_BUSINESS_MODULE.PAGE_LIST_BUSINESS_MODULES:
+        return ListModulesByBusinessWidget(SECTION.BUSINESS);
+      case NAVIGATOR_BUSINESS_MODULE.PAGE_LIST_MODULES:
+        return ListModulesWidget(SECTION.BUSINESS);
+      case NAVIGATOR_BUSINESS_MODULE.PAGE_EDIT_MODULE:
+        return EditModuleWidget(SECTION.BUSINESS);
+    }
   }
 }

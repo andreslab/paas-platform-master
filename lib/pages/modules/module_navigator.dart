@@ -2,10 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:paas/model/business.dart';
 import 'package:paas/providers/modules/module_bar.dart';
 import 'package:paas/widgets/edit_module.dart';
-import 'package:paas/widgets/list_modules_general.dart';
+import 'package:paas/widgets/list_modules.dart';
 import 'package:provider/provider.dart';
 import 'package:paas/api/business.dart';
 import 'package:paas/utils/utils.dart';
+import 'package:paas/widgets/upload_new_module.dart';
 
 class MModuleNavigatorWidget extends StatefulWidget {
   @override
@@ -13,36 +14,20 @@ class MModuleNavigatorWidget extends StatefulWidget {
 }
 
 class _MModuleNavigatorWidgetState extends State<MModuleNavigatorWidget> {
-  final _businessAPI = BusinessAPI();
-
-  List<BusinessModel> dataBusiness = List<BusinessModel>();
-
-  _loadBusiness() async {
-    //call request
-    final res = await _businessAPI.getBusinessList(context);
-
-    if (res != null) {
-      print("OK");
-      setState(() {
-        dataBusiness = res;
-      });
-    }
-  }
-
+  
   @override
   Widget build(BuildContext context) {
 
-    
-    _loadBusiness();
 
     final moduleInfo = Provider.of<MModuleBar>(context);
-  
 
-    List<Widget> pages = [
-      ModuleListGeneralWidget(Section.MODULES),
-      ModuleEditWidget(Section.MODULES)
-    ];
-
-    return Container(color: Colors.white, child: pages[moduleInfo.indexPage]);
+    switch (moduleInfo.indexPage) {
+      case NAVIGATOR_MODULE_MAIN.PAGE_MAIN_LIST_MODULES:
+        return ListModulesWidget(SECTION.MODULES);
+      case NAVIGATOR_MODULE_MAIN.PAGE_EDIT_MODULE:
+        return EditModuleWidget(SECTION.MODULES);
+      case NAVIGATOR_MODULE_MAIN.PAGE_NEW_MODULE:
+        return UploadNewModuleWidget();
+    }
   }
 }

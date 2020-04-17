@@ -7,22 +7,22 @@ import '../utils/utils.dart';
 import 'package:provider/provider.dart';
 
 
-class ModuleEditWidget extends StatefulWidget {
+class EditModuleWidget extends StatefulWidget {
 
-  Section section;
-  ModuleEditWidget(this.section);
+  SECTION section;
+  EditModuleWidget(this.section);
 
   @override
-  _ModuleEditWidgetState createState() => _ModuleEditWidgetState();
+  _EditModuleWidgetState createState() => _EditModuleWidgetState();
 }
 
-class _ModuleEditWidgetState extends State<ModuleEditWidget> {
+class _EditModuleWidgetState extends State<EditModuleWidget> {
   @override
   Widget build(BuildContext context) {
 
     var moduleInfo;
 
-    if(widget.section == Section.BUSINESS){
+    if(widget.section == SECTION.BUSINESS){
         moduleInfo = Provider.of<BModuleBar>(context);
         
     }else{

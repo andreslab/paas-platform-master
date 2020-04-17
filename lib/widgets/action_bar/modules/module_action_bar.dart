@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:paas/model/business.dart';
-import 'package:paas/model/module.dart';
 import 'package:paas/providers/modules/module_bar.dart';
 import 'package:paas/widgets/action_bar/modules/mixin/module_mixin.dart';
 import 'package:provider/provider.dart';
@@ -23,7 +21,7 @@ class _ModuleActionBarWidgetState extends State<ModuleActionBarWidget> {
       print(textEditingController.text);
     });
 
-    Widget moduleListGeneralBar = Padding(
+    Widget listModulesBar = Padding(
       padding: EdgeInsets.only(left: 20, right: 20),
       child: Row(
         children: <Widget>[
@@ -50,7 +48,7 @@ class _ModuleActionBarWidgetState extends State<ModuleActionBarWidget> {
       ),
     );
 
-    Widget moduleUploadBar = Padding(
+    Widget uploadModuleBar = Padding(
       padding: EdgeInsets.only(left: 20, right: 20),
       child: Row(
         //mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -87,8 +85,8 @@ class _ModuleActionBarWidgetState extends State<ModuleActionBarWidget> {
     );
 
     List<Widget> bars = <Widget>[
-      moduleListGeneralBar,
-      moduleUploadBar,
+      listModulesBar,
+      uploadModuleBar
     ];
 
     return Container(

@@ -7,17 +7,17 @@ import 'package:paas/providers/modules/module_bar.dart';
 import 'package:provider/provider.dart';
 import '../utils/utils.dart';
 
-class ModuleListByBusinessWidget extends StatefulWidget {
+class ListModulesByBusinessWidget extends StatefulWidget {
 
-  Section section;
+  SECTION section;
 
-  ModuleListByBusinessWidget(this.section);
+  ListModulesByBusinessWidget(this.section);
 
   @override
-  _ModuleListByBusinessWidgetState createState() => _ModuleListByBusinessWidgetState();
+  _ListModulesByBusinessWidgetState createState() => _ListModulesByBusinessWidgetState();
 }
 
-class _ModuleListByBusinessWidgetState extends State<ModuleListByBusinessWidget> {
+class _ListModulesByBusinessWidgetState extends State<ListModulesByBusinessWidget> {
 
   final _moduleAPI = ModuleAPI();
   var moduleCount = 0;
@@ -38,13 +38,7 @@ class _ModuleListByBusinessWidgetState extends State<ModuleListByBusinessWidget>
   @override
   Widget build(BuildContext context) {
 
-    var moduleInfo;
-
-    if(widget.section == Section.BUSINESS){
-       moduleInfo = Provider.of<BModuleBar>(context);
-    }else{
-       moduleInfo = Provider.of<MModuleBar>(context);
-    }
+    var moduleInfo = Provider.of<BModuleBar>(context);
 
     BusinessModel business = moduleInfo.businessSelected;
 

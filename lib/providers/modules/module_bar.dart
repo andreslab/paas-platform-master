@@ -1,20 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:paas/model/business.dart';
 import 'package:paas/model/module.dart';
+import 'package:paas/utils/utils.dart';
 
 class MModuleBar with ChangeNotifier {
-  int _indexPage = 0;
   int _indexMenu = 0;
+
+  NAVIGATOR_MODULE_MAIN _page = NAVIGATOR_MODULE_MAIN.PAGE_MAIN_LIST_MODULES;
 
   BusinessModel _businessSelected = BusinessModel(0,"",0,0,0,"");
   ModuleModel _moduleSelected = ModuleModel(0,"","","","");
 
   get indexPage {
-    return _indexPage;
+    return _page;
   }
 
-  set indexPage(int i) {
-    this._indexPage = i;
+  set indexPage(NAVIGATOR_MODULE_MAIN page) {
+    this._page = page;
     notifyListeners();
   }
 

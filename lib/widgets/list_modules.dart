@@ -6,23 +6,23 @@ import 'package:paas/providers/business/module_bar.dart';
 import 'package:paas/providers/modules/module_bar.dart';
 import '../utils/utils.dart';
 
-class ModuleListGeneralWidget extends StatefulWidget {
+class ListModulesWidget extends StatefulWidget {
   
-  Section section;
+  SECTION section;
 
-  ModuleListGeneralWidget(this.section);
+  ListModulesWidget(this.section);
 
   @override
-  _ModuleListGeneralWidgetState createState() =>
-      _ModuleListGeneralWidgetState();
+  _ListModulesWidgetState createState() =>
+      _ListModulesWidgetState();
 }
 
-class _ModuleListGeneralWidgetState extends State<ModuleListGeneralWidget> {
+class _ListModulesWidgetState extends State<ListModulesWidget> {
 
 
   final _moduleAPI = ModuleAPI();
   var moduleCount = 0;
-  List<ModuleModel> modules = List<ModuleModel>(); 
+  List<ModuleModel> dataModules = List<ModuleModel>(); 
 
   _loadModule() async {
     //call request
@@ -32,23 +32,18 @@ class _ModuleListGeneralWidgetState extends State<ModuleListGeneralWidget> {
       print("OK");
       setState(() {
         moduleCount = res.length;
-        modules = res;
+        dataModules = res;
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    var moduleInfo;
-
-    if(widget.section == Section.BUSINESS){
-       moduleInfo = Provider.of<BModuleBar>(context);
-    }else{
-       moduleInfo = Provider.of<MModuleBar>(context);
+    
+    
+    if(dataModules.length == 0){
+      _loadModule();
     }
-    
-    
-    _loadModule();
 
     return Container(
       child: ListView.builder(
@@ -56,9 +51,17 @@ class _ModuleListGeneralWidgetState extends State<ModuleListGeneralWidget> {
         itemBuilder: (context, position) {
           return InkWell(
             onTap: () {
-              moduleInfo.indexPage = 3; //editPage: 3
-              moduleInfo.indexMenu = 3; //editMenu: 2
-              moduleInfo.moduleSelected = modules[position];
+              
+              if(widget.section == SECTION.BUSINESS){
+                var moduleInfo = Provider.of<BModuleBar>(context);
+                moduleInfo.indexPage = NAVIGATOR_BUSINESS_MODULE.PAGE_EDIT_MODULE; 
+                moduleInfo.indexMenu = 3;
+                moduleInfo.moduleSelected = dataModules[position];
+              }else{
+                var moduleInfo = Provider.of<MModuleBar>(context);
+                moduleInfo.indexPage = NAVIGATOR_MODULE_MAIN.PAGE_EDIT_MODULE; 
+                moduleInfo.indexMenu = 0;
+              }
             },
             child: Container(
                 padding: EdgeInsets.all(20),
@@ -68,15 +71,15 @@ class _ModuleListGeneralWidgetState extends State<ModuleListGeneralWidget> {
                       child: Column(
                           crossAxisAlignment: CrossAxisAlignment.stretch,
                           children: [
-                            Text(modules[position].name.toUpperCase(), style: TextStyle(fontSize: 20)),
+                            Text(dataModules[position].name.toUpperCase(), style: TextStyle(fontSize: 20)),
                             SizedBox(
                               height: 10,
                             ),
-                            Text("Status: ${modules[position].status}",
+                            Text("Status: ${dataModules[position].status}",
                                 style: TextStyle(fontSize: 12)),
                           ]),
                     ),
-                    Text(modules[position].lastUpdate),
+                    Text(dataModules[position].lastUpdate),
                   ],
                 )),
           );

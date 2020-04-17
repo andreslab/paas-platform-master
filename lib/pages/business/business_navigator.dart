@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:paas/providers/business/business_bar.dart';
+import 'package:paas/utils/utils.dart';
 import 'package:provider/provider.dart';
 import 'package:paas/api/business.dart';
+import 'package:paas/widgets/grid_business.dart';
+import 'package:paas/widgets/detail_business.dart';
+import 'package:paas/model/business.dart';
 
 class BBsuinessNavigatorWidget extends StatefulWidget {
   /* final int businessCount;
@@ -14,7 +18,7 @@ class BBsuinessNavigatorWidget extends StatefulWidget {
 
 class _BBsuinessNavigatorWidgetState extends State<BBsuinessNavigatorWidget> {
   final _businessAPI = BusinessAPI();
-  var businessCount = 0;
+  List<BusinessModel> dataBusiness = List<BusinessModel>();
 
   _loadBusiness() async {
     //call request
@@ -23,161 +27,25 @@ class _BBsuinessNavigatorWidgetState extends State<BBsuinessNavigatorWidget> {
     if (res != null) {
       print("OK");
       setState(() {
-        businessCount = res.length;
+        dataBusiness = res;
       });
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    _loadBusiness();
+    
+    if (dataBusiness.length == 0){
+      _loadBusiness();
+    }
 
     final businessInfo = Provider.of<BBusinessBar>(context);
 
-    Widget businessDetail = Container(
-      child: Column(crossAxisAlignment: CrossAxisAlignment.stretch, children: [
-        Row(
-          children: <Widget>[
-            FadeInImage.assetNetwork(
-                width: 300,
-                height: 300,
-                placeholder: "res/img/img_business.png",
-                image: "https://img.icons8.com/dusk/2x/google-logo--v1.png"),
-            /*Container(
-              decoration: BoxDecoration(
-                image: DecorationImage(
-                  image: AssetImage("res/img/img_bg_ad_slide.png"),
-                  fit: BoxFit.fill,
-                ),
-              ),
-            ),*/
-            Text(
-              "Nombre de empresa",
-              style: TextStyle(fontSize: 25),
-            )
-          ],
-        ),
-        Text(
-          "Módulos",
-          style: TextStyle(fontSize: 20),
-        ),
-        Wrap(
-          spacing: 0.0, // gap between adjacent chips
-          runSpacing: 0.0, // gap between lines
-          children: <Widget>[
-            module("modulo1", true),
-            module("modulo2", true),
-            module("modulo3", true),
-            module("modulo4", false),
-            module("modulo5", false),
-            module("modulo6", true),
-            module("modulo7", true),
-            module("modulo8", false),
-          ],
-        ),
-        /*Container(
-          child: Expanded(
-              child: GridView.builder(
-                  itemCount: 5,
-                  gridDelegate: new SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 3),
-                  itemBuilder: (BuildContext context, int index) {
-                    return Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Text("Modulo"),
-                        Checkbox(
-                          value: true,
-                          onChanged: (bool value) {
-                            /*setState(() {
-                                isActiveModule = value;
-                              });*/
-                            print("...");
-                          },
-                        ),
-                      ],
-                    );
-                  })))*/
-      ]),
-    );
-
-    Widget businessGrid = GridView.builder(
-        itemCount: businessCount,
-        gridDelegate:
-            new SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 5),
-        itemBuilder: (BuildContext context, int index) {
-          return new GestureDetector(
-            child: new Card(
-              elevation: 5.0,
-              child: new Container(
-                  alignment: Alignment.center,
-                  child: Center(
-                    child: Stack(children: [
-                      Placeholder(
-                        fallbackHeight: 50,
-                        fallbackWidth: 50,
-                      ),
-                      Text('Item $index'),
-                    ]),
-                  )),
-            ),
-            onTap: () {
-              /*showDialog(
-                barrierDismissible: false,
-                context: context,
-                child: new CupertinoAlertDialog(
-                  title: new Column(
-                    children: <Widget>[
-                      new Text("GridView"),
-                      new Icon(
-                        Icons.favorite,
-                        color: Colors.green,
-                      ),
-                    ],
-                  ),
-                  content: new Text("Selected Item $index"),
-                  actions: <Widget>[
-                    new FlatButton(
-                        onPressed: () {
-                          Navigator.of(context).pop();
-                        },
-                        child: new Text("OK"))
-                  ],
-                ),
-              );*/
-              Navigator.pushNamed(context, "detail");
-            },
-          );
-        });
-
-    List<Widget> pages = [
-      PageView(
-        children: <Widget>[businessGrid, businessDetail],
-      ),
-      Container(
-        child: Text("Pagina 1"),
-      ),
-      Container(
-        child: Text("Pagina 2"),
-      ),
-    ];
-
-    return Container(color: Colors.white, child: pages[businessInfo.indexPage]);
+    switch (businessInfo.indexPage) {
+      case NAVIGATOR_BUSINESS_MAIN.PAGE_MAIN_LIST_BUSINESS:
+        return GridBusinessWidget(dataBusiness, SECTION.BUSINESS);
+      case NAVIGATOR_BUSINESS_MAIN.PAGE_DETAIL_BUSINESS:
+        return DetailBusinessWidget();
+    }
   }
-
-  Widget module(String label, bool isActive) => Container(
-          child: Row(
-        children: <Widget>[
-          Text(label),
-          Checkbox(
-            value: isActive,
-            onChanged: (bool value) {
-              /*setState(() {
-                                isActiveModule = value;
-                              });*/
-              print("...");
-            },
-          )
-        ],
-      ));
 }
