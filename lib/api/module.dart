@@ -140,4 +140,40 @@ class ModuleAPI {
       return false;
     }
   }
+
+  Future<String> uploadModule(BuildContext context) async {
+
+    try {
+
+      var uri = Uri.http(AppConfig.apiHost, "/api/modules/upload");
+
+      final http.Response response = await http.get(uri);
+    
+      //final responseString = response.body;
+
+      print("GET MODULE LIST | CODE:${response.statusCode} | URL: " + uri.toString());
+
+      final parsed = jsonDecode(response.body);
+
+      if (response.statusCode == 200) {
+        final htmlUpload = parsed["data"] as String;
+        print("response 200: ${response.body}");
+        print("response 200: ${htmlUpload.toString()}");
+    
+        return htmlUpload;
+      }else if (response.statusCode == 500){
+        //lanza excepcion
+        throw PlatformException(code: "500", message: parsed["message"]);
+      }
+
+      throw PlatformException(code: "201", message: "Error getModuleList");
+
+    } on PlatformException catch(e){
+      print("Error ${e.code}:${e.message}");
+      /* Dialogs.alert(context, title: "ERROR", message: e.message, onOk: (){
+
+      }); */
+      return null;
+    }
+  }
 }
