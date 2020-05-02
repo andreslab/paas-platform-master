@@ -3,12 +3,12 @@
 import 'package:flutter/services.dart';
 import 'package:file_picker/file_picker.dart';
 
-class UploadNewModuleWidget extends StatefulWidget {
+class UploadModuleWidget extends StatefulWidget {
   @override
-  _UploadNewModuleWidgetState createState() => new _UploadNewModuleWidgetState();
+  _UploadModuleWidgetState createState() => new _UploadModuleWidgetState();
 }
 
-class _UploadNewModuleWidgetState extends State<UploadNewModuleWidget> {
+class _UploadModuleWidgetState extends State<UploadModuleWidget> {
   String _fileName;
   String _path;
   Map<String, String> _paths;
@@ -185,25 +185,30 @@ import 'dart:typed_data';
 import 'dart:async';
 import 'dart:convert';
 import 'package:http_parser/http_parser.dart';
-
 import 'package:http/http.dart' as http;
+import 'package:paas/model/module.dart';
 
-class UploadNewModuleWidget extends StatefulWidget {
+import 'package:provider/provider.dart';
+import 'package:paas/providers/modules/module_bar.dart';
+
+class UploadModuleWidget extends StatefulWidget {
   @override
-  _UploadNewModuleWidgetState createState() =>
-      new _UploadNewModuleWidgetState();
+  _UploadModuleWidgetState createState() =>
+      new _UploadModuleWidgetState();
 }
 
-class _UploadNewModuleWidgetState extends State<UploadNewModuleWidget> {
+class _UploadModuleWidgetState extends State<UploadModuleWidget> {
 
-  List<int> _selectedFile;
+  List<int> _selectedFile = [];
+  String fileName = "";
   Uint8List _bytesData;
 
   GlobalKey _formKey = new GlobalKey();
 
   startWebFilePicker() async {
     html.InputElement uploadInput = html.FileUploadInputElement();
-    uploadInput.multiple = true;
+    uploadInput.multiple = false;
+    uploadInput.accept = ".zip";
     uploadInput.draggable = true;
     uploadInput.click();
 
@@ -212,10 +217,14 @@ class _UploadNewModuleWidgetState extends State<UploadNewModuleWidget> {
       final file = files[0];
       final reader = new html.FileReader();
 
+      //if (file.name.substring(file.name.lastIndexOf('.')).substring(1) == "zip") {} 
+
       reader.onLoadEnd.listen((e) {
         _handleResult(reader.result);
       });
       reader.readAsDataUrl(file);
+      
+      fileName = file.name.substring(0,file.name.lastIndexOf('.'));
     });
   }
 
@@ -223,10 +232,11 @@ class _UploadNewModuleWidgetState extends State<UploadNewModuleWidget> {
     setState(() {
       _bytesData = Base64Decoder().convert(result.toString().split(",").last);
       _selectedFile = _bytesData;
+      
     });
   }
 
-  Future makeRequest() async {
+  /*Future makeRequest() async {
     var url = Uri.parse("http://localhost:5000/api/modules/upload");
     var request = new http.MultipartRequest("POST", url);
 
@@ -240,11 +250,11 @@ class _UploadNewModuleWidgetState extends State<UploadNewModuleWidget> {
       if (response.statusCode == 200) print("Uploaded!");
     });
 
-    /*showDialog(
+    showDialog(
         barrierDismissible: false,
         context: context,
         child: new AlertDialog(
-          title: new Text("Details"),
+          title: new Text("New Module"),
           //content: new Text("Hello World"),
           content: new SingleChildScrollView(
             child: new ListBody(
@@ -255,17 +265,31 @@ class _UploadNewModuleWidgetState extends State<UploadNewModuleWidget> {
           ),
           actions: <Widget>[
             new FlatButton(
-              child: new Text('Aceptar'),
+              child: new Text('Done'),
               onPressed: () {
-                
+                Navigator.of(context).pop();
               },
             ),
           ],
-        ));*/
-  }
+        ));
+  }*/
+  TextEditingController textEditingNameController = TextEditingController();
+  TextEditingController textEditingDescriptionController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
+    final moduleInfo = Provider.of<MModuleBar>(context);
+
+    
+    textEditingNameController.addListener(() {
+      print(textEditingNameController.text);
+    });
+
+    
+    textEditingDescriptionController.addListener(() {
+      print(textEditingDescriptionController.text);
+    });
+
     return new Center(
         child: new Padding(
       padding: const EdgeInsets.only(left: 10.0, right: 10.0),
@@ -284,14 +308,22 @@ class _UploadNewModuleWidgetState extends State<UploadNewModuleWidget> {
                       Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: <Widget>[
+                            TextField(
+                              onChanged: (input) => print(input),
+                              controller: textEditingNameController,
+                            ),
+                            TextField(
+                              onChanged: (input) => print(input),
+                              controller: textEditingDescriptionController,
+                            ),
                             MaterialButton(
-                              color: Colors.pink,
+                              color: Colors.grey,
                               elevation: 8,
                               highlightElevation: 2,
                               shape: RoundedRectangleBorder(
                                   borderRadius: BorderRadius.circular(8)),
                               textColor: Colors.white,
-                              child: Text('Select a file'),
+                              child: Text('Upload file'),
                               onPressed: () {
                                 startWebFilePicker();
                               },
@@ -300,13 +332,28 @@ class _UploadNewModuleWidgetState extends State<UploadNewModuleWidget> {
                               color: Colors.teal,
                             ),
                             RaisedButton(
-                              color: Colors.purple,
+                              color: Colors.blue,
                               elevation: 8.0,
                               textColor: Colors.white,
                               onPressed: () {
-                                makeRequest();
+                                //makeRequest();
+                                if (_selectedFile.isNotEmpty) {
+                                  print("selected file success");
+                                  
+                                  setState(() {
+                                    textEditingNameController.text = textEditingNameController.text.isEmpty ?  fileName :  textEditingNameController.text;
+                                  });
+                                  
+                                  moduleInfo.selectedModuleFileToUpload = _selectedFile;
+                                  moduleInfo.dataModuleUpload = NewModule(
+                                    name: textEditingNameController.text, 
+                                    description: textEditingDescriptionController.text,
+                                    status: 0);
+                                }else{
+                                  print("completar campos");
+                                }
                               },
-                              child: Text('Send file to server'),
+                              child: Text(_selectedFile.isNotEmpty ? 'Verify' : 'Wait'),
                             ),
                           ])
                     ])),

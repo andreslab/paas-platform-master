@@ -18,3 +18,11 @@ class ModuleByBusinessModel{
 
   ModuleByBusinessModel(this.id, this.businessId,this.moduleId, this.isActivate, this.created);
 }
+
+class NewModule{
+  final String name;
+  final String description;
+  final int status;
+  
+  NewModule({this.name,this.description,this.status});
+}

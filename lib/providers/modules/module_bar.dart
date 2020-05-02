@@ -11,6 +11,9 @@ class MModuleBar with ChangeNotifier {
   BusinessModel _businessSelected = BusinessModel(0,"",0,0,0,"");
   ModuleModel _moduleSelected = ModuleModel(0,"","","","");
 
+  List<int> _selectedModuleFileToUpload = [];
+  NewModule _dataModuleUpload = NewModule();
+
   get indexPage {
     return _page;
   }
@@ -44,6 +47,24 @@ class MModuleBar with ChangeNotifier {
 
   set moduleSelected(ModuleModel moduleModel) {
     this._moduleSelected = moduleModel;
+    notifyListeners();
+  }
+
+  get selectedModuleFileToUpload {
+    return _selectedModuleFileToUpload;
+  }
+
+  set selectedModuleFileToUpload(List<int> selectedFile) {
+    this._selectedModuleFileToUpload = selectedFile;
+    notifyListeners();
+  }
+
+  get dataModuleUpload {
+    return _dataModuleUpload;
+  }
+
+  set dataModuleUpload(NewModule newModule) {
+    this._dataModuleUpload = newModule;
     notifyListeners();
   }
 }

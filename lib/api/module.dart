@@ -4,7 +4,9 @@ import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
 import 'package:paas/model/module.dart';
 import '../config.dart';
-import '../model/business.dart';
+import 'package:http_parser/http_parser.dart';
+
+
 
 class ModuleAPI {
 
@@ -141,13 +143,16 @@ class ModuleAPI {
     }
   }
 
-  Future<String> uploadModule(BuildContext context) async {
+  Future<String> uploadDataModule(BuildContext context, NewModule newModule) async {
 
     try {
 
-      var uri = Uri.http(AppConfig.apiHost, "/api/modules/upload");
+      var uri = Uri.http(AppConfig.apiHost, "/api/modules/upload/data");
 
-      final http.Response response = await http.get(uri);
+      Map<String, String> headers = {"Content-type": "application/json"};
+      String json = '{"name":${newModule.name},"description":${newModule.description},"status":${newModule.status}}';
+
+      final http.Response response = await http.post(uri, headers: headers, body: json);
     
       //final responseString = response.body;
 
@@ -170,10 +175,38 @@ class ModuleAPI {
 
     } on PlatformException catch(e){
       print("Error ${e.code}:${e.message}");
-      /* Dialogs.alert(context, title: "ERROR", message: e.message, onOk: (){
-
-      }); */
       return null;
     }
+  }
+
+  Future<bool> uploadModule(List<int> _selectedFile, String nameFile) async {
+
+    try {
+      var uri = Uri.http(AppConfig.apiHost, "/api/modules/upload");
+      //var url = Uri.parse("${AppConfig.apiHost}/api/modules/upload");
+      
+      var request = new http.MultipartRequest("POST", uri);
+
+      request.files.add(http.MultipartFile.fromBytes('file', _selectedFile,
+          contentType: new MediaType('application', 'octet-stream'),
+          filename: "$nameFile.zip"));
+
+
+      var statusCode = 500;
+
+      await request.send().then((response) {
+        print("test");
+        print(response.statusCode);
+        if (response.statusCode == 200) {
+          statusCode = 200;
+          print("Uploaded!");
+        }
+      });
+      return statusCode == 200 ? true : false;
+    }on PlatformException catch(e){
+      print("Error ${e.code}:${e.message}");
+      return null;
+    }
+    
   }
 }

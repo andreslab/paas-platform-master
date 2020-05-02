@@ -6,7 +6,7 @@ import 'package:paas/widgets/list_modules.dart';
 import 'package:provider/provider.dart';
 import 'package:paas/api/business.dart';
 import 'package:paas/utils/utils.dart';
-import 'package:paas/widgets/upload_new_module.dart';
+import 'package:paas/widgets/upload_module.dart';
 
 class MModuleNavigatorWidget extends StatefulWidget {
   @override
@@ -27,7 +27,7 @@ class _MModuleNavigatorWidgetState extends State<MModuleNavigatorWidget> {
       case NAVIGATOR_MODULE_MAIN.PAGE_EDIT_MODULE:
         return EditModuleWidget(SECTION.MODULES);
       case NAVIGATOR_MODULE_MAIN.PAGE_NEW_MODULE:
-        return UploadNewModuleWidget();
+        return UploadModuleWidget();
     }
   }
 }

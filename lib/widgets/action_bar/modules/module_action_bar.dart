@@ -54,32 +54,14 @@ class _ModuleActionBarWidgetState extends State<ModuleActionBarWidget> {
         //mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: <Widget>[
           RaisedButton(
-            child: Icon(Icons.arrow_back),
-            onPressed: () => widget.goModuleMain(moduleInfo),
+                child: Text(moduleInfo.selectedModuleFileToUpload.isNotEmpty ? "Upload" : "Complete fields"),
+                onPressed: () => moduleInfo.selectedModuleFileToUpload.isNotEmpty ? widget.callServiceUpload(moduleInfo,context) : null,
           ),
-          SizedBox(
-            width: 20,
-          ),
-          Expanded(
-                child: TextField(
-                  onChanged: (input) => print(input),
-                  controller: textEditingController,
-                ),
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              RaisedButton(
-                child: Icon(Icons.filter_list),
-                onPressed: () => print("FILTER"),
-              ),
-              SizedBox(
-                width: 20,
-              ),
-              RaisedButton(
+          Spacer(),
+          RaisedButton(
                 child: Icon(Icons.close),
                 onPressed: () => widget.goModuleMain(moduleInfo),
-              )
+          )
         ],
       ),
     );
